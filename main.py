@@ -1,4 +1,5 @@
 from datetime import *
+from zoneinfo import ZoneInfo
 import os
 from requests import *
 
@@ -33,6 +34,7 @@ headers_she = {
     "Authorization": f"Bearer {BEARER_TOKEN}",
     "Content-Type": "application/json"
 }
+now = datetime.now(ZoneInfo("Asia/Kolkata"))
 
 now = datetime.now()
 current_date = now.strftime("%d/%m/%Y")
