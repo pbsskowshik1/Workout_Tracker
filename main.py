@@ -1,5 +1,4 @@
 from datetime import *
-from zoneinfo import ZoneInfo
 import os
 from requests import *
 
@@ -34,7 +33,12 @@ headers_she = {
     "Authorization": f"Bearer {BEARER_TOKEN}",
     "Content-Type": "application/json"
 }
-now = datetime.now(ZoneInfo("Asia/Kolkata"))
+
+utc_now = datetime.now(timezone.utc)
+
+# 2. Manually shift the clock forward by 5 hours and 30 minutes for IST
+ist_offset = timedelta(hours=5, minutes=30)
+now = utc_now + ist_offset
 
 now = datetime.now()
 current_date = now.strftime("%d/%m/%Y")
