@@ -1,4 +1,3 @@
-from requests import *
 import os
 from datetime import *
 
