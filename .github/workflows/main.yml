@@ -1,9 +1,14 @@
 name: Run Exercise Tracker
 
 on:
+  # Creates an interactive text input form on the GitHub website
   workflow_dispatch:
-  schedule:
-    - cron: '0 23 * * *'
+    inputs:
+      workout_query:
+        description: 'What exercise did you do today?'
+        required: true
+        default: 'ran 5k and cycled for 20 minutes'
+        type: string
 
 jobs:
   run-tracker-script:
@@ -25,9 +30,11 @@ jobs:
 
     - name: Execute Tracker Script with Secrets
       env:
-        SHEET_ENDPOINT: ${{ secrets.SHEET_ENDPOINT }}
-        BEARER_TOKEN: ${{ secrets.BEARER_TOKEN }}
-        X_APP_ID: ${{ secrets.X_APP_ID }}
-        X_APP_KEY: ${{ secrets.X_APP_KEY }}
-        ENV_SHEETY_USERNAME: ${{ secrets.ENV_SHEETY_USERNAME }}
+        # Maps your exact GitHub repository secret names to your code keys
+        SHEET_ENDPOINT: ${{ secrets.ENV_SHEETY_ENDPOINT }}
+        BEARER_TOKEN: ${{ secrets.ENV_BEARER_TOKEN }}
+        X_APP_ID: ${{ secrets.ENV_NIX_APP_ID }}
+        X_APP_KEY: ${{ secrets.ENV_NIX_API_KEY }}
+        # Passes what you type in the browser text box straight into Python
+        DEFAULT_QUERY: ${{ inputs.workout_query }}
       run: python main.py
